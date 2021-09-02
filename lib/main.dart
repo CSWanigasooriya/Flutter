@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Counter',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.red,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Home Page'),
     );
   }
 }
@@ -47,6 +47,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int _currentIndex = 0;
+  final _tabs = [
+    Center(child:Text('Home')),
+    Center(child:Text('Search')),
+    Center(child:Text('Settings'))
+  ];
 
   void _incrementCounter() {
     setState(() {
@@ -94,10 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: Colors.teal,
+        elevation: 12,
       ),
-      body: Center(
+      body: Container(
+        alignment: Alignment.center,
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
@@ -124,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            _tabs[_currentIndex]
           ],
         ),
       ),
@@ -155,6 +163,22 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: Colors.green,
           ),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+              label: 'Home', icon: Icon(Icons.home), tooltip: 'Home'),
+          BottomNavigationBarItem(
+              label: 'Search', icon: Icon(Icons.search), tooltip: 'Search'),
+          BottomNavigationBarItem(
+              label: 'Settings', icon: Icon(Icons.settings), tooltip: 'Settings'),
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
